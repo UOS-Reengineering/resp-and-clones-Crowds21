@@ -6,22 +6,19 @@ import java.util.*;
  * This is a god class example. Assuming there are many more methods in this class.
  * It has too many responsibilities and should be redistributed.
  * TODO: Redistribute responsibilities by moving behaviours closer to the data they manipulate.
- *
  */
 public class Bank {
-
     List<BankAccount> accounts;
     List<Customer> customers;
     List<Branch> branches;
-    Payroll payroll;
+    Map<String, PaySchedule> payrole;
 
     public Bank() {
         accounts = new ArrayList<>();
         customers = new ArrayList<>();
         branches = new ArrayList<>();
-        Map<String, PaySchedule> staffCategoryPaySchedule = new HashMap<>();
-        staffCategoryPaySchedule.put("admin", new PaySchedule("01"));
-        payroll = new Payroll(staffCategoryPaySchedule);
+        payrole = new HashMap<>();
+        payrole.put("admin", new PaySchedule("01"));
     }
 
     public List<BankAccount> getAccounts() {
@@ -36,24 +33,23 @@ public class Bank {
         return branches;
     }
 
-    public Payroll getPayroll() {
-        return payroll;
-    }
 
     // This method should not be moved to Branch class. Why not? Please think about it.
     public void setUpBranch(Branch branch) {
         branches.add(branch);
     }
 
-    // TODO: move this method to Branch class
-    public void changeOpeningTime(Branch branch, String openingTime) {
-        branch.setOpeningTime(openingTime);
-    }
+//    // TODO: move this method to Branch class
+//    public void changeOpeningTime(Branch branch, String openingTime) {
+//        branch.setOpeningTime(openingTime);
+//
+//        branch.changeOpeningTime(openingTime);
+//    }
 
-    // TODO: move this method to Branch class
-    public void registerTelephone(Branch branch, String telephone) {
-        branch.setTelephone(telephone);
-    }
+//    // TODO: move this method to Branch class
+//    public void registerTelephone(Branch branch, String telephone) {
+//        branch.setTelephone(telephone);
+//    }
 
     // This method should not be moved to BankAccount/Customer class. Why not? Please think about it.
     public void setUpNewAccount(BankAccount account, Customer customer) {
@@ -61,10 +57,10 @@ public class Bank {
         customers.add(customer);
     }
 
-    // TODO: move this method to BankAccount class
-    public double obtainBalance(BankAccount account) {
-        return account.getBalance();
-    }
+//    // TODO: move this method to BankAccount class
+//    public double obtainBalance(BankAccount account) {
+//        return account.getBalance();
+//    }
 
     // This method should not be moved to BankAccount class. Why not? Please think about it.
     public void closeAccount(BankAccount account) {
@@ -72,12 +68,12 @@ public class Bank {
         accounts.remove(account);
     }
 
-    // TODO: move this method to BankAccount class
-    public void addInterest(BankAccount account) {
-        double interest = account.getInterest();
-        double value = account.getBalance() * interest;
-        account.setBalance(account.getBalance() + value);
-    }
+//    // TODO: move this method to BankAccount class
+//    public void addInterest(BankAccount account) {
+//        double interest = account.getInterest();
+//        double value = account.getBalance() * interest;
+//        account.setBalance(account.getBalance() + value);
+//    }
 
     // This method should not be moved to Branch class. Why not? Please think about it.
     public void closeBranch(Branch branch) {
@@ -87,7 +83,11 @@ public class Bank {
 
     // TODO: remove navigation code
     public void changePayrollProcessingDate(String date, String staffCategory) {
-        payroll.getStaffCategoryPaySchedule(staffCategory).payDay = date; // TODO: remove this navigation code
+        // TODO: remove this navigation code
+        payrole.get(staffCategory).setPayDay(date);
     }
 
+    public String getPayrollProcessingDate(String role) {
+        return payrole.get(role).getPayDay();
+    }
 }
